@@ -1,0 +1,28 @@
+name: Generate games.json
+
+on:
+  push:
+    paths:
+      - 'HtmlFiles/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Generate games.json
+        run: |
+          cd HtmlFiles
+          ls *.html > temp.txt
+          jq -R -s -c 'split("\n")[:-1]' temp.txt > games.json
+          rm temp.txt
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add HtmlFiles/games.json
+          git commit -m "Update games.json" || echo "No changes to commit"
+          git push
