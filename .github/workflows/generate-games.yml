@@ -3,7 +3,7 @@ name: Generate games.json
 on:
   push:
     paths:
-      - 'HtmlFiles/**'
+      - 'HtmlFiles2/**'
 
 jobs:
   build:
